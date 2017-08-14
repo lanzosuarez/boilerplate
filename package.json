@@ -1,0 +1,34 @@
+{
+  "name": "av",
+  "version": "1.0.0",
+  "description": "Appventure boilter plate",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "open": "nodemon app.js",
+    "dev": "npm-run-all --parallel open lint:watch",
+    "lint": "node_modules/.bin/esw app.js src",
+    "lint:watch": "npm run lint -- --watch"
+  },
+  "author": "Alfonzo Suarez",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^1.0.2",
+    "dotenv": "^4.0.0",
+    "generate-password": "^1.3.0",
+    "jsonwebtoken": "^7.4.1",
+    "lodash": "^4.17.4",
+    "mongoose": "^4.11.2",
+    "request": "^2.81.0",
+    "restify": "^4.1.1",
+    "sendgrid": "^5.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.2.0",
+    "eslint-config-google": "^0.9.1",
+    "eslint-watch": "^3.1.2",
+    "mocha": "^3.4.2",
+    "npm-run-all": "^4.0.2"
+  }
+}

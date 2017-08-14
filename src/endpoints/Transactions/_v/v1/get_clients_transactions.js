@@ -14,8 +14,14 @@ module.exports = (req, res, next) => {
 
         getAllTransactions = () => {
             return Transaction.find().
-                populate('Client', 'firstname lastname').
-                populate('Vehicle', 'vehicle_model').
+                populate({
+                    path: 'client',
+                    select: 'firstname lastname'
+                }).
+                populate({
+                    path: 'vehicle',
+                    select: 'vehicle_model'
+                }).
                 exec().
                 then(data => {
                     return data;

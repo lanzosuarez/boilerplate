@@ -9,7 +9,7 @@ const
 
 var client_booking_schema = {
     client: refGen('Client'),
-    vehicle: refGen('Vehicle'),
+    vehicle: refGen('ClientVehicle'),
     service: typeGen(Schema.Types.String),
     status: typeGen(Schema.Types.Boolean, true, true),
     date_create: defaultDateNow()

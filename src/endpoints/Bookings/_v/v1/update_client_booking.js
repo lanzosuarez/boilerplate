@@ -44,7 +44,7 @@ module.exports = (req, res, next) => {
         try {
             var booking = await findBooking(),
                 updatedBooking = updateBooking(booking);
-            await saveBooking(updateBooking);
+            await saveBooking(updatedBooking);
             
             sendSuccess(res, {}, "Booking successfully updated");
 

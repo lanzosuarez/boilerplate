@@ -1,5 +1,5 @@
 const
-    Transaction = require('../../../../models/transaction'),
+    ClientSubscription = require('../../../../models/client_subscription'),
     {
         sendError,
         sendSuccess,
@@ -10,19 +10,12 @@ const
 
 module.exports = (req, res, next) => {
 
-    const { _id } = req.params;
-
     const
-
-        getAllTransactions = () => {
-            return Transaction.findById(_id).
+        getAllSubscriptions = () => {
+            return ClientSubscription.find().
                 populate({
                     path: 'client',
                     select: 'firstname lastname'
-                }).
-                populate({
-                    path: 'vehicle',
-                    select: 'vehicle_model'
                 }).
                 exec().
                 then(data => {
@@ -34,14 +27,14 @@ module.exports = (req, res, next) => {
 
     async function main() {
         try {
-            var transactions = await getAllTransactions(),
-                msg = 'Transactions retrieved';
-
-            sendSuccess(res, transactions, msg);
+            var subscriptions = await getAllSubscriptions(),
+                msg = 'Subscriptions retrieved';
+            console.log(subscriptions);
+            sendSuccess(res, subscriptions, msg);
 
         } catch (e) {
             console.log(e);
-            sendError(res, e, "An error hapened while fetching the transactions data");
+            sendError(res, e, "An error hapened while fetching the subscriptions data");
         }
     }
 

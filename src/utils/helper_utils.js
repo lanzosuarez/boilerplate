@@ -39,6 +39,15 @@ const generateKeyPairs = (keys, values) => {
     return obj;
 };
 
+const updateEntity = (toUpdate, updater) => {
+    Object.keys(updater).
+        forEach(key => {
+            toUpdate[key] = updater[key];
+        });
+
+    return toUpdate;
+};
+
 const userFields = () => {
     return [
         "username",
@@ -91,5 +100,6 @@ module.exports = {
     generateKeyPairs,
     userFields,
     vehicleFields,
-    forgotPassTemplate
+    forgotPassTemplate,
+    updateEntity
 };

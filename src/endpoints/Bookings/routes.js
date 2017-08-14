@@ -4,6 +4,7 @@ const { validateAppToken } = require('../../utils/security_utils');
 
 const get_client_bookings_v1 = require('./_v/v1/get_client_bookings'),
     get_clients_bookings_v1 = require('./_v/v1/get_clients_bookings'),
+    update_clients_booking_v1 = require('./_v/v1/update_client_booking'),
     create_client_booking_v1 = require('./_v/v1/create_booking');
 
 

@@ -42,8 +42,8 @@ module.exports = (req, res, next) => {
         try {
             var transaction = await findTranscations(),
                 updatedTransaction = updateTransaction(transaction);
-            await saveTransaction(updateTransaction);
-            
+            await saveTransaction(updatedTransaction);
+
             sendSuccess(res, {}, "Transaction successfully updated");
 
         } catch (e) {

@@ -16,8 +16,14 @@ module.exports = (req, res, next) => {
 
         getAllBookings = () => {
             return ClientBooking.findById(_id).
-                populate('Client', 'firstname').
-                populate('Vehicle', 'vehicle_model').
+                populate({ 
+                    path: 'client',
+                    select: 'firstname' 
+                }).
+                populate({
+                    path: 'vehicle',
+                    select: 'vehicle_model', 
+                }).
                 exec().then(data => {
                     return data;
                 }).catch(err => {

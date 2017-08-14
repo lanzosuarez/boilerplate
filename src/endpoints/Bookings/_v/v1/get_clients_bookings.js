@@ -14,7 +14,7 @@ module.exports = (req, res, next) => {
         getAllBookings = () => {
             return ClientBooking.find().
                 populate('Client', 'firstname lastname').
-                populate('Vehicle', 'vehicle_model').
+                populate('ClientVehicle', 'vehicle_model').
                 exec().
                 then(data => {
                     return data;

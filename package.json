@@ -11,6 +11,9 @@
     "lint": "node_modules/.bin/esw app.js src",
     "lint:watch": "npm run lint -- --watch"
   },
+  "engines": {
+    "node": "7.6.0"  
+  },
   "author": "Alfonzo Suarez",
   "license": "ISC",
   "dependencies": {

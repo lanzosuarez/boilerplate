@@ -13,7 +13,7 @@ module.exports = (req, res, next) => {
 
     const
         findTranscations = () => {
-            Transaction.findById(_id).
+            return Transaction.findById(_id).
                 then(data => {
                     return data;
                 }).catch(err => {

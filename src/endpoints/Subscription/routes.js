@@ -18,7 +18,3 @@ api.get({ path: '/jrc/get_subscriptions' },
 api.get({ path: '/jrc/get_clients_subscriptions' },
     get_clients_subsriptions_v1
 );
-
-api.get({ path: '/jrc/get_client_subscriptions/:_id' },
-    get_client_subsriptions_v1
-);

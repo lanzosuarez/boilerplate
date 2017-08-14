@@ -11,11 +11,11 @@ api.post({ path: '/jrc/client_registration' },
     registration_v1
 );
 
-api.get({ path: '/jrc/get_user' },
+api.get({ path: '/jrc/user' },
     get_user_v1
 );
 
-api.post({ path: '/jrc/update_user' },
+api.post({ path: '/jrc/user' },
     update_user_v1
 );
 

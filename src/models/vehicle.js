@@ -9,7 +9,10 @@ const
 
 const vehicle_schema = {
     Brand: typeGen(Schema.Types.String),
-    models: [{ name: typeGen(Schema.Types.String) }]
+    models: [{
+        name: typeGen(Schema.Types.String),
+        features: {}
+    }]
 };
 
 module.exports = mongoose.model('Vehicle', vehicle_schema);

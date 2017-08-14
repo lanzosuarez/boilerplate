@@ -48,6 +48,16 @@ const updateEntity = (toUpdate, updater) => {
     return toUpdate;
 };
 
+
+const waitForPromiseArr = (promiseArr) => {
+    return Promise.all(promiseArr()).
+        then(data => {
+        }).catch(err => {
+            throw err;
+        });
+};
+
+
 const userFields = () => {
     return [
         "username",
@@ -101,5 +111,6 @@ module.exports = {
     userFields,
     vehicleFields,
     forgotPassTemplate,
-    updateEntity
+    updateEntity,
+    waitForPromiseArr
 };

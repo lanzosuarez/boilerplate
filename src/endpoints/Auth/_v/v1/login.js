@@ -90,34 +90,33 @@ module.exports = (req, res, next) => {
     async function main() {
         try {
             var user = await login();
-            console.log(user);
-            // if (user !== null) {
-            //     var authenticate = await comparePws(user.password);
-            //     if (authenticate === true) {
-            //         var token = generateToken(user),
-            //             payload = getPayload(user);
+            if (user !== null) {
+                var authenticate = await comparePws(user.password);
+                if (authenticate === true) {
+                    var token = generateToken(user),
+                        payload = getPayload(user);
 
-            //         sendData({
-            //             token,
-            //             payload
-            //         });
+                    sendData({
+                        token,
+                        payload
+                    });
 
-            //     } else {
-            //         sendResponse(
-            //             res,
-            //             401,
-            //             CODE_AUTH_ERROR,
-            //             "Invalid username/password"
-            //         );
-            //     }
-            // } else {
-            //     sendResponse(
-            //         res,
-            //         401,
-            //         CODE_AUTH_ERROR,
-            //         "Invalid username/password"
-            //     );
-            // }
+                } else {
+                    sendResponse(
+                        res,
+                        401,
+                        CODE_AUTH_ERROR,
+                        "Invalid username/password"
+                    );
+                }
+            } else {
+                sendResponse(
+                    res,
+                    401,
+                    CODE_AUTH_ERROR,
+                    "Invalid username/password"
+                );
+            }
         } catch (err) {
             console.log("async error");
             sendError(res, err);

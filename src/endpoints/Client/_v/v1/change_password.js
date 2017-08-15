@@ -1,5 +1,6 @@
 const
     User = require('../../../../models/client'),
+    { CODE_NOT_FOUND } = require('../../../../globals/globals'),
     {
         generateRandomPassword,
         hashPassword,
@@ -8,6 +9,7 @@ const
     {
         forgotPassTemplate,
         sendSuccess,
+        sendResponse
     } = require('../../../../utils/helper_utils');
 
 
@@ -44,13 +46,23 @@ module.exports = (req, res, next) => {
 
     async function main() {
         try {
-            var client = await getClient(),
-                generatedPass = generateRandomPassword(6),
-                newPass = await hashPassword(generatedPass);
+            var client = await getClient();
+            if (client !== null) {
 
-            await saveEntity(updateClient(client, newPass));
+                var generatedPass = generateRandomPassword(6),
+                    newPass = await hashPassword(generatedPass);
 
-            sendSuccess(res, {}, "Youre password has been changed");
+                await saveEntity(updateClient(client, newPass));
+                sendSuccess(res, {}, "Youre password has been changed");
+
+            } else {
+                sendResponse(
+                    res,
+                    404,
+                    CODE_NOT_FOUND,
+                    "User not found"
+                );
+            }
         } catch (e) {
             console.log(e);
         }

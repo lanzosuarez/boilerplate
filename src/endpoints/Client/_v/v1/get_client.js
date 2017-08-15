@@ -1,10 +1,11 @@
 const
     Client = require('../../../../models/client'),
     Notifications = require('../../../../models/notification'),
-    { } = require('../../../../globals/globals'),
+    { CODE_NOT_FOUND } = require('../../../../globals/globals'),
     {
         sendError,
         sendSuccess,
+        sendResponse,
         generateKeyPairs,
     } = require('../../../../utils/helper_utils');
 
@@ -26,7 +27,16 @@ module.exports = (req, res, next) => {
     async function main() {
         try {
             const user = await findUser(_id);
-            sendSuccess(res, user, "User retrieved");
+            if (user !== null) {
+                sendSuccess(res, user, "User retrieved");
+            } else {
+                sendResponse(
+                    res,
+                    404,
+                    CODE_NOT_FOUND,
+                    "Client not found"
+                );
+            }
         } catch (e) {
             console.log(e);
             sendError(res, e, "An error hapened while fetching the client's data");

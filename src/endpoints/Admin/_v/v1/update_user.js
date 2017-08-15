@@ -1,6 +1,7 @@
 const
     User = require('../../../../models/user'),
     { decodeToken } = require('../../../../utils/security_utils'),
+    { CODE_NOT_FOUND } = require('../../../../globals/globals'),
     {
         sendError,
         sendSuccess,
@@ -49,12 +50,19 @@ module.exports = (req, res, next) => {
         //kulang pa nung user deductables
         //and maybe validations
         try {
-            var user = await findUser(),
-                updatedUser = updateUser(user);
-            await saveUser(updatedUser);
-
-            sendSuccess(res, {}, "Booking successfully updated");
-
+            var user = await findUser();
+            if (user !== null) {
+                var updatedUser = updateUser(user);
+                await saveUser(updatedUser);
+                sendSuccess(res, {}, "User successfully updated");
+            } else {
+                sendResponse(
+                    res,
+                    404,
+                    CODE_NOT_FOUND,
+                    "User not found"
+                );
+            }
         } catch (e) {
             sendError(res, e, "An error happened while processing the user")
         }

@@ -1,5 +1,6 @@
 const
     Transaction = require('../../../../models/transaction'),
+    { CODE_NOT_FOUND } = require('../../../../globals/globals'),
     {
         sendError,
         sendSuccess,
@@ -40,11 +41,21 @@ module.exports = (req, res, next) => {
 
     async function main() {
         try {
-            var transaction = await findTranscations(),
+            var transaction = await findTranscations();
+            if (transaction !== null) {
                 updatedTransaction = updateTransaction(transaction);
-            await saveTransaction(updatedTransaction);
 
-            sendSuccess(res, {}, "Transaction successfully updated");
+                await saveTransaction(updatedTransaction);
+
+                sendSuccess(res, {}, "Transaction successfully updated");
+            } else {
+                sendResponse(
+                    res,
+                    404,
+                    CODE_NOT_FOUND,
+                    "Transaction not found"
+                );
+            }
 
         } catch (e) {
             sendError(res, e, "An error happened while processing the transaction")

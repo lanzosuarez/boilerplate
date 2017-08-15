@@ -1,6 +1,7 @@
 const
     User = require('../../../../models/user'),
     { decodeToken } = require('../../../../utils/security_utils'),
+    { CODE_NOT_FOUND } = require('../../../../globals/globals'),
     {
         sendError,
         sendSuccess,
@@ -26,9 +27,18 @@ module.exports = (req, res, next) => {
 
     async function main() {
         try {
-            var user = await getUser(),
-                msg = 'User found';
-            sendSuccess(res, user, msg);
+            var user = await getUser();
+            if (user !== null) {
+                var msg = 'User found';
+                sendSuccess(res, user, msg);
+            } else {
+                sendResponse(
+                    res,
+                    404,
+                    CODE_NOT_FOUND,
+                    "User not found"
+                );
+            }
 
         } catch (e) {
             console.log(e);

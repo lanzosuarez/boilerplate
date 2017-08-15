@@ -2,6 +2,8 @@ const jwt = require('jsonwebtoken'),
     passwordGenerator = require('generate-password'),
     bcrypt = require('bcrypt'),
     { CODE_FORBIDDEN } = require('../globals/globals'),
+    User = require('../models/user'),
+    Client = require('../models/client'),
     { sendResponse } = require('./helper_utils');
 
 
@@ -28,6 +30,25 @@ exports.generateAppAccessToken = (payload) => {
     return jwt.sign(payload, key, { expiresIn: '365d' });
 };
 
+const
+    findUser = (_id) => {
+        return User.findById(_id).
+            then(data => {
+                return data;
+            }).catch(err => {
+                console.log(err);
+            });
+    },
+
+    findClient = (_id) => {
+        return Client.findById(_id).
+            then(data => {
+                return data;
+            }).catch(err => {
+                console.log(err);
+            });
+    };
+
 //validate JWT access token
 exports.validateAppToken = (req, res, next) => {
     // console.log(req.headers);
@@ -38,12 +59,52 @@ exports.validateAppToken = (req, res, next) => {
         key = "dsds",
         //jwt verify callback
         verifyCb = (err, tokenData) => {
+
             if (!err) {
-                req.token_info = tokenData;
-                return next();
+
+                const { permission_level, _id } = tokenData;
+
+                if (permission_level) {
+                    findUser(_id).
+                        then(data => {
+                            if (data !== null) {
+                                return next();
+                            } else {
+                                sendResponse(
+                                    res,
+                                    403,
+                                    "",
+                                    "Invalid User"
+                                );
+                            }
+                        }).catch(err => {
+                            console.log(err);
+                        });
+                } else {
+                    findClient(_id).
+                        then(data => {
+                            if (data !== null) {
+                                return next();
+                            } else {
+                                sendResponse(
+                                    res,
+                                    403,
+                                    "",
+                                    "Invalid User"
+                                );
+                            }
+                        }).catch(err => {
+                            console.log(err);
+                        });
+                }
             }
             else {
-                sendForbidden(res);
+                sendResponse(
+                    res,
+                    403,
+                    "",
+                    "Invalid token"
+                );
             }
         };
 

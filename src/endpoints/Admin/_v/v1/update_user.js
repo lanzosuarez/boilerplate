@@ -1,5 +1,6 @@
 const
     User = require('../../../../models/user'),
+    { decodeToken } = require('../../../../utils/security_utils'),
     {
         sendError,
         sendSuccess,
@@ -10,7 +11,7 @@ const
 
 module.exports = (req, res, next) => {
 
-    const { _id } = req.headers['x-access-token'];
+    const { _id } = decode(req.headers['x-access-token']);
 
     const
         findUser = () => {

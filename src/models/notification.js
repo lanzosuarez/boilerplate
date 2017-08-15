@@ -17,6 +17,7 @@ const
 const notification = new Schema({
     content: typeGen(Schema.Types.String),
     client: refGen('Client'),
+    status: typeGen(Schema.Types.Boolean),
     date_created: defaultDateNow()
 });
 

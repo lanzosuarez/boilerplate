@@ -57,6 +57,16 @@ const waitForPromiseArr = (promiseArr) => {
         });
 };
 
+const saveDocument = (model, val) => {
+    var doc = new Model(val);
+    return doc.save().
+        then(data => {
+            return data;
+        }).catch(err => {
+            throw err;
+        });
+};
+
 
 const userFields = () => {
     return [

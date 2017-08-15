@@ -13,8 +13,14 @@ module.exports = (req, res, next) => {
     const
         getAllBookings = () => {
             return ClientBooking.find().
-                populate('Client', 'firstname lastname').
-                populate('ClientVehicle', 'vehicle_model').
+                populate({
+                    path: 'client',
+                    select: 'firstname lastname'
+                }).
+                populate({
+                    path: 'vehicle',
+                    select: 'vehicle_model',
+                }).
                 exec().
                 then(data => {
                     return data;
@@ -28,7 +34,7 @@ module.exports = (req, res, next) => {
             var bookings = await getAllBookings(),
                 msg = 'Bookings retrieved';
             console.log(bookings)
-            sendSuccess(res,bookings, msg);
+            sendSuccess(res, bookings, msg);
 
         } catch (e) {
             console.log(e);

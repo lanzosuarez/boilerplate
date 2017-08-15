@@ -18,7 +18,7 @@ module.exports = (req, res, next) => {
             return ClientBooking.findById(_id).
                 populate({ 
                     path: 'client',
-                    select: 'firstname' 
+                    select: 'firstname lastname' 
                 }).
                 populate({
                     path: 'vehicle',

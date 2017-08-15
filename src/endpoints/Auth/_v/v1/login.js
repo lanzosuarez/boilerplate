@@ -29,15 +29,30 @@ module.exports = (req, res, next) => {
         },
 
         getPayload = (user) => {
-            const { username, _id, permission_level, firstname, lastname, email } = user;
-            return {
+
+            const {
                 username,
                 _id,
-                permission_level,
                 firstname,
                 lastname,
-                email
+                email,
+                permission_level,
+                user_permissions
+            } = user;
+
+            var payload = {
+                _id,
+                username,
+                firstname,
+                email,
+                user_permissions
             };
+
+            if (permission_level !== undefined) {
+                payload.permission_level = permission_level;
+            }
+
+            return payload;
         },
 
         //login

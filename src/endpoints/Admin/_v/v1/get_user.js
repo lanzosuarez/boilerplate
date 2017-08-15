@@ -12,7 +12,7 @@ const
 
 module.exports = (req, res, next) => {
 
-    const { _id } = decode(req.headers['x-access-token']);
+    const { _id } = decodeToken(req.headers['x-access-token']);
 
     const
 

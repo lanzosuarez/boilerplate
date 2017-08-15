@@ -7,27 +7,32 @@ const
         sendSuccess,
     } = require('../../../../utils/helper_utils');
 
-module.exports = () => {
+module.exports = (req, res, next) => {
 
     const
-        newUser = () => {
+        createUser = () => {
             const newUser = new User(req.body);
             return newUser;
         },
 
         saveUser = (user) => {
-            user.password = hashPassword(user.password);
-            return user.save().
+            return hashPassword(user.password).
                 then(data => {
-                    return data;
+                    user.password = data;
+                    return user.save().
+                        then(data => {
+                            return data;
+                        }).catch(err => {
+                            throw err;
+                        });
                 }).catch(err => {
                     throw err;
-                });
+                })
         };
 
     async function main() {
         try {
-            const user = newUser(),
+            var user = createUser(),
                 newUser = await saveUser(user);
 
             sendSuccess(
@@ -37,6 +42,7 @@ module.exports = () => {
             );
 
         } catch (e) {
+            console.log(e);
             sendError(res, e, "Error creaing user");
         }
     }

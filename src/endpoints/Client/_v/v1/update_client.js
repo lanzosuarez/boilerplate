@@ -11,7 +11,7 @@ const
 
 module.exports = (req, res, next) => {
 
-    const { _id } = decode(req.headers['x-access-token']);
+    const { _id } = decodeToken(req.headers['x-access-token']);
 
     const
         findClient = () => {
@@ -22,6 +22,7 @@ module.exports = (req, res, next) => {
                     throw err;
                 });
         },
+
         updateClient = (client) => {
             Object.keys(req.body).
                 forEach(key => {
@@ -51,13 +52,16 @@ module.exports = (req, res, next) => {
                 await saveClient(updatedClient);
                
                 sendSuccess(res, {}, "Booking successfully updated");
+
             } else {
+
                 sendResponse(
                     res,
                     404,
                     CODE_NOT_FOUND,
                     "Client not found"
                 );
+
             }
 
         } catch (e) {

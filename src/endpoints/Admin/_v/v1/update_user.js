@@ -12,9 +12,10 @@ const
 
 module.exports = (req, res, next) => {
 
-    const { _id } = decode(req.headers['x-access-token']);
+    const { _id } = decodeToken(req.headers['x-access-token']);
 
     const
+
         findUser = () => {
             User.findById(_id).
                 then(data => {
@@ -23,7 +24,6 @@ module.exports = (req, res, next) => {
                     throw err;
                 });
         },
-
 
         updateUser = (user) => {
             Object.keys(req.body).

@@ -21,7 +21,7 @@ const
     product_type = ['ceramicpro', 'autovault'],
     packages = ['gold', 'silver', 'bronze', 'platiunum', 'diamond'],
     terms_of_payment = ['monthly', 'annual'],
-    service_options = ["elite", "diamond", "premium"],
+    service_options = ["small", "medium", "large"],
     modes_of_payment = ['cash', 'credit'];
 
 const client_subscription_schema = {

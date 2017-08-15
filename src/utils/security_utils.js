@@ -21,7 +21,7 @@ exports.hashPassword = (password) => {
 exports.comparePasswords = (passedPassword, storedPassword) => {
     console.log(passedPassword, storedPassword);
     return bcrypt.compare(passedPassword, storedPassword).
-        then(onData).catch(onError);
+        then(data => data).catch(err => err);
 };
 
 //generate JWT access token

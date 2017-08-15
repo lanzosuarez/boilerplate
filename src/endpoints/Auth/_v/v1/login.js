@@ -118,7 +118,7 @@ module.exports = (req, res, next) => {
                 );
             }
         } catch (err) {
-            console.log("async error");
+            console.log(err);
             sendError(res, err);
         }
     };

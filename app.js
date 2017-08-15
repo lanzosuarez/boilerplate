@@ -8,7 +8,7 @@ dbconn(function (err) {
     if (err)
         console.log(err);
     else
-        console.log('MongoDB successfully connected to: ', process.env.MONGODB_URI);
+        console.log('MongoDB successfully connected to: ', process.env.MONGOLAB_URI);
 });
 
 //create server
@@ -74,4 +74,7 @@ require('./src/endpoints/Bookings/routes');
 
 //booking routes
 require('./src/endpoints/Subscription/routes');
+
+//vehicle information routes
+require('./src/endpoints/Vehicle/routes');
 

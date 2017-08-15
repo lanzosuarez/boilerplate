@@ -57,6 +57,16 @@ const waitForPromiseArr = (promiseArr) => {
         });
 };
 
+const saveDocument = (model, val) => {
+    var doc = new Model(val);
+    return doc.save().
+        then(data => {
+            return data;
+        }).catch(err => {
+            throw err;
+        });
+};
+
 
 const userFields = () => {
     return [
@@ -102,6 +112,14 @@ const forgotPassTemplate = (name, password) => {
     `;
 };
 
+const initialPassTemplate = (name, password) => {
+    return `
+        <h3> Hello ${name}, this is your password: </h3> 
+        <p>${password}<p/> <br><br>
+        <b> Please login to https://kmc-visitors-login-cms.herokuapp.com and change you password</b>
+    `;
+};
+
 
 module.exports = {
     sendError,
@@ -112,5 +130,6 @@ module.exports = {
     vehicleFields,
     forgotPassTemplate,
     updateEntity,
-    waitForPromiseArr
+    waitForPromiseArr,
+    initialPassTemplate
 };

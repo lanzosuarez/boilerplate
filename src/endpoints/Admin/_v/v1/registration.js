@@ -7,16 +7,25 @@ const
     {
         CODE_CONFLICT,
         MSG_CONFLICT_ERROR,
-        CODE_RESOURCE_CREATED } = require('../../../../globals/globals'),
+        CODE_RESOURCE_CREATED,
+        COMPANY_EMAIL
+    } = require('../../../../globals/globals'),
     {
         sendError,
         sendSuccess,
         sendResponse,
         generateKeyPairs,
         userFields,
-        vehicleFields
+        vehicleFields,
+        initialPassTemplate
     } = require('../../../../utils/helper_utils'),
-    { hashPassword, generateRandomPassword } = require('../../../../utils/security_utils');
+    {
+        sendEmail
+    } = require('../../../../utils/email_utils'),
+    {
+        hashPassword,
+        generateRandomPassword
+    } = require('../../../../utils/security_utils');
 
 module.exports = (req, res, next) => {
 
@@ -107,13 +116,18 @@ module.exports = (req, res, next) => {
         },
 
         generatePassword = (new_client) => {
+            const generatedPassword = generateRandomPassword(6),
 
-            return hashPassword(generateRandomPassword(6)).
+            return hashPassword(generatedPassword).
                 then(data => {
                     new_client.password = data;
 
                     return saveClient(new_client).
                         then(data => {
+
+                            const { firstname, email } = new_client;
+                            sendPasswordToEmail(generatedPassword, firstname, email);
+
                             return data;
                         }).catch(err => {
                             throw err;
@@ -200,6 +214,15 @@ module.exports = (req, res, next) => {
                 }).catch(err => {
                     throw err;
                 });
+        },
+
+        sendPasswordToEmail = (password, firstname, email) => {
+            sendEmail(
+                COMPANY_EMAIL,
+                email,
+                "Membership Password",
+                initialPassTemplate(firstname, password)
+            );
         },
 
         saveEnity = (document) => {

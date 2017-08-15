@@ -1,5 +1,5 @@
 const
-    User = require('../../../../models/user'),
+    Notification = require('../../../../models/notification'),
     { decodeToken } = require('../../../../utils/security_utils'),
     {
         sendError,
@@ -15,8 +15,8 @@ module.exports = (req, res, next) => {
 
     const
 
-        getUser = () => {
-            return User.findById(_id).
+        getNotifications = () => {
+            return Notification.findOne({ owner: _id }).
                 then(data => {
                     return data;
                 }).catch(err => {
@@ -26,13 +26,13 @@ module.exports = (req, res, next) => {
 
     async function main() {
         try {
-            var user = await getUser(),
+            var notifications = await getNotifications(),
                 msg = 'User found';
-            sendSuccess(res, user, msg);
+            sendSuccess(res, notifications, msg);
 
         } catch (e) {
             console.log(e);
-            sendError(res, e, "An error hapened while fetching the user data");
+            sendError(res, e, "An error hapened while fetching the notifications");
         }
     }
 

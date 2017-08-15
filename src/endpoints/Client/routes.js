@@ -11,7 +11,7 @@ api.patch({ path: '/jrc/forgot_pass/client' },
     forgot_pass_client_v1
 );
 
-// api.use(validateAppToken);
+api.use(validateAppToken);
 
 api.get({ path: '/jrc/get_client/:id' },
     get_client_v1

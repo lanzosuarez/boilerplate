@@ -20,7 +20,7 @@ module.exports = (req, res, next) => {
                 $and : [
                     { vehicle : _id },
                     { date_created : dateFilter(req)} 
-                ]}).
+                ]}). 
                 then(data => {
                     return data;
                 }).catch(err => {

@@ -116,7 +116,7 @@ module.exports = (req, res, next) => {
         },
 
         generatePassword = (new_client) => {
-            const generatedPassword = generateRandomPassword(6),
+            const generatedPassword = generateRandomPassword(6);
 
             return hashPassword(generatedPassword).
                 then(data => {

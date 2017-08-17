@@ -13,11 +13,14 @@ const
 
 module.exports = (req, res, next) => {
     const { _id } = req.params;
-
     const
 
         getVehicleTransaction = () => {
-            return Transaction.find({vehicle : _id}).
+            return Transaction.find({
+                $and : [
+                    { vehicle : _id },
+                    { date_created : dateFilter(req)} 
+                ]}).
                 then(data => {
                     return data;
                 }).catch(err => {
@@ -30,7 +33,6 @@ module.exports = (req, res, next) => {
             var transaction = await getVehicleTransaction(),
                 msg = 'Vehicle Information found';
             sendSuccess(res, transaction, msg);
-            console.log('Date Filter: ',dateFilter());
 
         } catch (e) {
             console.log(e);

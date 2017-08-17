@@ -28,7 +28,7 @@ api.use(
 
 function unknownMethodHandler(req, res) {
     if (req.method.toLowerCase() === 'options') {
-        var allowHeaders = ['Accept', 'Accept-Version', 'Content-Type', 'Api-Version', 'x-access-token'];
+        var allowHeaders = ['Accept', 'Accept-Version', 'Content-Type', 'Api-Version', 'x-access-token', 'x-request-type'];
 
         if (res.methods.indexOf('OPTIONS') === -1) res.methods.push('OPTIONS');
 

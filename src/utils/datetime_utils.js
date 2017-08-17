@@ -21,7 +21,7 @@ exports.timeToDecimal = function (t) {
     return parseFloat(parseInt(arr[0], 10) + '.' + parseInt((arr[1] / 6) * 10, 10));
 };
 
-exports.dateFilter = function (req, utcOffset) {
+exports.dateFilter = function (req) {
     var reqType = req.headers['x-request-type'] ? req.headers['x-request-type'] : '0';
     var startDate = req.params.startDate;
     var endDate = req.params.endDate;
@@ -29,84 +29,56 @@ exports.dateFilter = function (req, utcOffset) {
 
     switch (reqType) {
         case 'Today':
-            day = {
-                $gte: moment(
-                    this.getTimeZoneDate(new Date(Date.now()), utcOffset)
-                ).startOf('day').toDate(),
-                $lte: moment(
-                    this.getTimeZoneDate(new Date(Date.now()), utcOffset)
-                ).endOf('day').toDate(),
+            return day = {
+                $gte: moment(new Date(Date.now())).startOf('day').toDate(),
+                $lte: moment(new Date(Date.now())).endOf('day').toDate(),
             }
             break;
 
         case 'Yesterday':
-            day = {
-                $gte: moment(
-                    this.getTimeZoneDate(new Date(Date.now()), utcOffset)
-                ).startOf('day').subtract(1, 'day').toDate(),
-                $lte: moment(
-                    this.getTimeZoneDate(new Date(Date.now()), utcOffset)
-                ).endOf('day').subtract(1, 'day').toDate(),
+            return day = {
+                $gte: moment(new Date(Date.now())).startOf('day').subtract(1, 'day').toDate(),
+                $lte: moment(new Date(Date.now())).endOf('day').subtract(1, 'day').toDate(),
             }
             break;
 
         case 'Last 7 Days':
-            day = {
-                $gte: moment(
-                    this.getTimeZoneDate(new Date(Date.now()), utcOffset)
-                ).startOf('week').subtract(1, 'week').toDate(),
-                $lte: moment(
-                    this.getTimeZoneDate(new Date(Date.now()), utcOffset)
-                ).toDate(),
+            return day = {
+                $gte: moment(new Date(Date.now())).startOf('week').subtract(1, 'week').toDate(),
+                $lte: moment(new Date(Date.now())).toDate(),
             }
             break;
 
         case 'Last 30 Days':
-            day = {
-                $gte: moment(
-                    this.getTimeZoneDate(new Date(Date.now()), utcOffset)
-                ).startOf('day').subtract(30, 'day').toDate(),
-                $lte: moment(
-                    this.getTimeZoneDate(new Date(Date.now()), utcOffset)
-                ).toDate(),
+            return day = {
+                $gte: moment(new Date(Date.now())).startOf('day').subtract(30, 'day').toDate(),
+                $lte: moment(new Date(Date.now())).toDate(),
             }
             break;
 
         case 'Last 90 Days':
-            day = {
-                $gte: moment(
-                    this.getTimeZoneDate(new Date(Date.now()), utcOffset)
-                ).startOf('day').subtract(90, 'day').toDate(),
-                $lte: moment(
-                    this.getTimeZoneDate(new Date(Date.now()), utcOffset)
-                ).toDate(),
+            return day = {
+                $gte: moment(new Date(Date.now())).startOf('day').subtract(90, 'day').toDate(),
+                $lte: moment(new Date(Date.now())).toDate(),
             }
             break;
 
         case 'Last Year':
-            day = {
-                $gte: moment(
-                    this.getTimeZoneDate(new Date(Date.now()), utcOffset)
-                ).startOf('year').subtract(1, 'year').toDate(),
-                $lte: moment(
-                    this.getTimeZoneDate(new Date(Date.now()), utcOffset)
-                ).toDate(),
+            return day = {
+                $gte: moment(new Date(Date.now())).startOf('year').subtract(1, 'year').toDate(),
+                $lte: moment(new Date(Date.now())).toDate(),
             }
             break;
 
         case 'Custom':
-            day = {
-                $gte: moment(
-                    this.getTimeZoneDate(new Date(startDate), utcOffset)
-                ).toDate(),
-                $lte: moment(
-                    this.getTimeZoneDate(new Date(endDate), utcOffset)
-                ).add(1, 'day').toDate(),
+            return day = {
+                $gte: moment(new Date(startDate)).toDate(),
+                $lte: moment(new Date(endDate)).add(1, 'day').toDate(),
             }
             break;
 
         default:
-            day = 'Invalid';
+            return day = 'Invalid';
     }
-    return day;
+    //return day;
 };

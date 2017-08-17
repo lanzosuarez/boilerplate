@@ -5,11 +5,12 @@ const
         sendSuccess,
         sendResponse,
         generateKeyPairs,
-    } = require('../../../../utils/helper_utils');
+    } = require('../../../../utils/helper_utils'),
+    { decodeToken } = require('../../../../utils/security_utils');
 
 
 module.exports = (req, res, next) => {
-    const { _id } = req.params;
+    const { _id } = decodeToken(req.headers['x-access-token']);
 
     const
 

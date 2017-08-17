@@ -1,6 +1,7 @@
 
 
 const
+    moment = require('moment'),
     Client = require('../../../../models/client'),
     Client_Subscription = require('../../../../models/client_subscription'),
     Client_Vehicle = require('../../../../models/client_vehicle'),
@@ -47,7 +48,8 @@ module.exports = (req, res, next) => {
         documents,
         user_permissions,
         subscription,
-        vehicles
+        vehicles,
+        expiry
     } = req.body,
 
         cctv = 'http://dummy.com/192.32.1.1',
@@ -60,7 +62,7 @@ module.exports = (req, res, next) => {
                 product_type = ['ceramicpro', 'autovault'],
                 package = ['gold', 'silver', 'bronze'],
                 term_of_payment = ['monthly', 'annual'],
-                service_option = ["elite", "diamond", "premium"],
+                service_option = ["small", "medium", "large"],
                 mode_of_payment = ['cash', 'credit'];
 
             return {
@@ -191,7 +193,10 @@ module.exports = (req, res, next) => {
 
         },
 
+
         saveSubscription = (new_subscription) => {
+            new_subscription.endDate = setExpirationDate();
+            console.log(new_subscription);
             var client_subscription = new Client_Subscription(new_subscription);
             return saveEnity(client_subscription).
                 then(data => {
@@ -223,6 +228,10 @@ module.exports = (req, res, next) => {
                 "Membership Password",
                 initialPassTemplate(firstname, password)
             );
+        },
+
+        setExpirationDate = () => {
+            return moment().add(expiry, 'M').toDate();
         },
 
         saveEnity = (document) => {

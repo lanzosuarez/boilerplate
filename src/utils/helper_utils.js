@@ -50,8 +50,9 @@ const updateEntity = (toUpdate, updater) => {
 
 
 const waitForPromiseArr = (promiseArr) => {
-    return Promise.all(promiseArr()).
+    return Promise.all(promiseArr).
         then(data => {
+            return data;
         }).catch(err => {
             throw err;
         });

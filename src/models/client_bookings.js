@@ -12,6 +12,7 @@ var client_booking_schema = {
     vehicle: refGen('ClientVehicle'),
     service: typeGen(Schema.Types.String),
     status: typeGen(Schema.Types.Boolean, true, true),
+    scheduled_date: typeGen(Schema.Types.Date),
     date_create: defaultDateNow()
 };
 

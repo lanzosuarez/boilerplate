@@ -9,8 +9,8 @@ const
 
 const vehicle_schema = {
     Brand: typeGen(Schema.Types.String),
-    models: [{
-        name: typeGen(Schema.Types.String),
+    brand: [{
+        model: typeGen(Schema.Types.String),
         features: {}
     }]
 };

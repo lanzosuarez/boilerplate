@@ -6,8 +6,7 @@ const
         sendError,
         sendSuccess,
         sendResponse,
-        generateKeyPairs,
-        updateEntity
+        generateKeyPairs
     } = require('../../../../utils/helper_utils');
 
 module.exports = (req, res, next) => {
@@ -17,7 +16,7 @@ module.exports = (req, res, next) => {
     const
 
         findUser = () => {
-            User.findById(_id).
+            return User.findById(_id).
                 then(data => {
                     return data;
                 }).catch(err => {
@@ -29,7 +28,7 @@ module.exports = (req, res, next) => {
             Object.keys(req.body).
                 forEach(key => {
                     if (key === 'user_permissions') {
-                        user.user_permissions = updateEntity(user.user_permissions, req.body.user_permissions);
+                        user.user_permissions = Object.assign(user.user_permissions, req.body.user_permissions);
                     } else {
                         user[key] = req.body[key];
                     }
@@ -64,6 +63,7 @@ module.exports = (req, res, next) => {
                 );
             }
         } catch (e) {
+            console.log(e);
             sendError(res, e, "An error happened while processing the user")
         }
     }

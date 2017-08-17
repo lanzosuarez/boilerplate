@@ -15,9 +15,8 @@ const
 //date_created
 
 const notification = new Schema({
-    content: typeGen(Schema.Types.String),
+    booking: refGen('ClientBooking'),
     client: refGen('Client'),
-    status: typeGen(Schema.Types.Boolean),
     date_created: defaultDateNow()
 });
 

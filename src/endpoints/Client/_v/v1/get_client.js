@@ -22,7 +22,14 @@ module.exports = (req, res, next) => {
                 }).catch(err => {
                     throw err;
                 });
+        },
+
+
+        findNotifications = () => {
+            
+
         };
+
 
     async function main() {
         try {

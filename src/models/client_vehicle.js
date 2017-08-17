@@ -24,7 +24,8 @@ const client_vehicle = new Schema({
     vehicle_maker: typeGen(Schema.Types.String),
     vehicle_model: typeGen(Schema.Types.String),
     model_year: typeGen(Schema.Types.String),
-    date_created: defaultDateNow()
+    date_created: defaultDateNow(),
+    features: {}
 });
 
 module.exports = mongoose.model('ClientVehicle', client_vehicle);

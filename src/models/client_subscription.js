@@ -31,6 +31,7 @@ const client_subscription_schema = {
     service_option: typeGen(Schema.Types.String),
     mode_of_payment: typeGen(Schema.Types.String),
     date_created: defaultDateNow(),
+    endDate: typeGen(Schema.Types.Date),
     status: typeGen(Schema.Types.Boolean, true, true),
     subscription: {},
     client: refGen('Client')

@@ -60,11 +60,11 @@ api.get('/', function (req, res) { res.send(200, { msg: 'Welcome to AUTOVAULT' }
 // login
 require('./src/endpoints/Auth/routes');
 
-// registration
-require('./src/endpoints/Admin/routes');
-
 //client routes
 require('./src/endpoints/Client/routes');
+
+// registration
+require('./src/endpoints/Admin/routes');
 
 //transactions routes
 require('./src/endpoints/Transactions/routes');

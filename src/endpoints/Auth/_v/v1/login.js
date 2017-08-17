@@ -1,14 +1,25 @@
 
 const
     User = require('../../../../models/user'),
-    { generateAppAccessToken } = require('../../../../utils/security_utils'),
-    { CODE_AUTH_ERROR, MSG_CONFLICT_ERROR } = require('../../../../globals/globals'),
-    { sendError, sendSuccess, sendResponse } = require('../../../../utils/helper_utils');
+    Client = require('../../../../models/client'),
+    {
+        generateAppAccessToken,
+        comparePasswords
+    } = require('../../../../utils/security_utils'),
+    {
+        CODE_AUTH_ERROR,
+        MSG_CONFLICT_ERROR
+    } = require('../../../../globals/globals'),
+    {
+        sendError,
+        sendSuccess,
+        sendResponse
+    } = require('../../../../utils/helper_utils');
 
 module.exports = (req, res, next) => {
 
     //object destructure
-    const { username, password } = req.body,
+    const { username, password, flag } = req.body,
 
         comparePws = (storedPassword) => {
             console.log("password");
@@ -57,12 +68,22 @@ module.exports = (req, res, next) => {
 
         //login
         login = () => {
-            return User.findOne({ username: username }).
-                then(user => {
-                    return user;
-                }).catch(err => {
-                    throw err;
-                });
+            if (flag === undefined) {
+                return User.findOne({ username: username }).
+                    then(user => {
+                        return user;
+                    }).catch(err => {
+                        throw err;
+                    });
+
+            } else {
+                return Client.findOne({ username: username }).
+                    then(user => {
+                        return user;
+                    }).catch(err => {
+                        throw err;
+                    });
+            }
         };
 
     //invoke all your process here
@@ -97,7 +118,7 @@ module.exports = (req, res, next) => {
                 );
             }
         } catch (err) {
-            console.log("async error");
+            console.log(err);
             sendError(res, err);
         }
     };

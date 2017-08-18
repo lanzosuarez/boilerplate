@@ -1,6 +1,5 @@
 const
     Client = require('../../../../models/client'),
-    Notifications = require('../../../../models/notification'),
     { CODE_NOT_FOUND } = require('../../../../globals/globals'),
     {
         sendError,
@@ -22,12 +21,6 @@ module.exports = (req, res, next) => {
                 }).catch(err => {
                     throw err;
                 });
-        },
-
-
-        findNotifications = () => {
-            
-
         };
 
 

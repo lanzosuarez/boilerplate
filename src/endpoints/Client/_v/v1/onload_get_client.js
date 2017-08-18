@@ -112,9 +112,9 @@ module.exports = (req, res, next) => {
         },
 
         formatClientInfo = (user) => {
-            const { cttv, rfid, username, lastname } = user;
+            const { cctv, rfid, username, lastname } = user;
             return {
-                cttv,
+                cctv,
                 rfid,
                 username,
                 lastname

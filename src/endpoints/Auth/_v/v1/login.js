@@ -93,12 +93,11 @@ module.exports = (req, res, next) => {
             if (user !== null) {
                 var authenticate = await comparePws(user.password);
                 if (authenticate === true) {
-                    var token = generateToken(user),
-                        payload = getPayload(user);
+                    var token = generateToken(user);
+                        // payload = getPayload(user);
 
                     sendData({
-                        token,
-                        payload
+                        token
                     });
 
                 } else {

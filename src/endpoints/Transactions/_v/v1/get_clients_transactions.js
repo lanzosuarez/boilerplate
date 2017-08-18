@@ -19,7 +19,7 @@ module.exports = (req, res, next) => {
                     select: 'firstname lastname'
                 }).
                 populate({
-                    path: 'vehicle',
+                    path: 'clientvehicle',
                     select: 'vehicle_model'
                 }).
                 exec().

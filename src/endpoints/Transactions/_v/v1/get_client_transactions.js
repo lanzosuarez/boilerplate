@@ -1,7 +1,7 @@
 const
     Transaction = require('../../../../models/transaction'),
     {
-        sendError,
+    sendError,
         sendSuccess,
         sendResponse,
         generateKeyPairs,
@@ -15,17 +15,15 @@ module.exports = (req, res, next) => {
     const
 
         getAllTransactions = () => {
-            return Transaction.findById(_id).
-                populate({
+            return Transaction.find({ client: _id })
+                .populate({
                     path: 'client',
                     select: 'firstname lastname'
-                }).
-                populate({
-                    path: 'vehicle',
+                }).populate({
+                    path: 'clientvehicle',
                     select: 'vehicle_model'
-                }).
-                exec().
-                then(data => {
+                }).exec()
+                .then(data => {
                     return data;
                 }).catch(err => {
                     throw err;
@@ -40,7 +38,7 @@ module.exports = (req, res, next) => {
             sendSuccess(res, transactions, msg);
 
         } catch (e) {
-            console.log(e);
+            console.log(e);``
             sendError(res, e, "An error hapened while fetching the transactions data");
         }
     }

@@ -55,7 +55,6 @@ exports.validateAppToken = (req, res, next) => {
     var
         token = req.headers['x-access-token'] || undefined,
 
-
         key = "dsds",
         //jwt verify callback
         verifyCb = (err, tokenData) => {

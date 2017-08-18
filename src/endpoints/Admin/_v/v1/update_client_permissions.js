@@ -13,7 +13,7 @@ module.exports = (req, res, next) => {
 
     const
         findClient = () => {
-            User.findById(_id).
+            return Client.findById(_id).
                 then(data => {
                     return data;
                 }).catch(err => {
@@ -60,6 +60,7 @@ module.exports = (req, res, next) => {
             }
 
         } catch (e) {
+            console.log(e);
             sendError(res, e, "An error happened while processing the client")
         }
     }

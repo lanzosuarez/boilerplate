@@ -33,7 +33,7 @@ module.exports = (req, res, next) => {
         },
 
         mapToUpdateBookings = (bookings) => {
-            return bookings.map((boooking, index) => {
+            return bookings.map((booking, index) => {
                 return updateBooking(booking, bookingsParam[index]);
             });
         },
@@ -51,10 +51,11 @@ module.exports = (req, res, next) => {
         },
 
         updateBooking = (booking, updater) => {
-            Object.keys(booking).
+            Object.keys(updater).
                 forEach(key => {
                     booking[key] = updater[key];
                 });
+                console.log(booking);
             return booking;
         },
 
@@ -67,7 +68,7 @@ module.exports = (req, res, next) => {
                 });
         },
 
-        saveBooking = (booking) => {
+        saveBookings = (booking) => {
             return booking.save().
                 then(data => {
                     return data;

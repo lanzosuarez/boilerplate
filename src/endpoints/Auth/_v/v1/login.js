@@ -68,6 +68,7 @@ module.exports = (req, res, next) => {
 
         //login
         login = () => {
+            console.log(username, password);
             if (flag === undefined) {
                 return User.findOne({ username: username }).
                     then(user => {
@@ -90,6 +91,7 @@ module.exports = (req, res, next) => {
     async function main() {
         try {
             var user = await login();
+            console.log(user);
             if (user !== null) {
                 var authenticate = await comparePws(user.password);
                 if (authenticate === true) {

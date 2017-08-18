@@ -1,15 +1,34 @@
 const
     User = require('../../../../models/user'),
-    { CODE_NOT_FOUND } = require('../../../../globals/globals'),
-    { hashPassword } = require('../../../../utils/security_utils'),
+    {
+        CODE_NOT_FOUND,
+        CODE_CONFLICT
+    } = require('../../../../globals/globals'),
+    {
+        hashPassword,
+        decodeToken
+    } = require('../../../../utils/security_utils'),
     {
         sendError,
         sendSuccess,
+        sendResponse
     } = require('../../../../utils/helper_utils');
 
 module.exports = (req, res, next) => {
 
+    const { username } = req.body;
+
     const
+
+        findUser = () => {
+            User.findOne({ username })
+                .then(data => {
+                    return data;
+                }).catch(err => {
+                    throw err;
+                });
+        },
+
         createUser = () => {
             const newUser = new User(req.body);
             return newUser;
@@ -25,7 +44,6 @@ module.exports = (req, res, next) => {
                         }).catch(err => {
                             throw err;
                         });
-                        
                 }).catch(err => {
                     throw err;
                 })
@@ -33,14 +51,21 @@ module.exports = (req, res, next) => {
 
     async function main() {
         try {
-            var user = createUser(),
-                newUser = await saveUser(user);
+            const
+                existing = await findUser();
 
-            sendSuccess(
-                res,
-                newUser,
-                "User successfully created"
-            );
+            if (existing !== null) {
+                const user = createUser(),
+                    newUser = await saveUser(user);
+
+                sendSuccess(
+                    res,
+                    newUser,
+                    "User successfully created"
+                );
+            } else {
+                sendResponse(res, 409, CODE_CONFLICT, "User already existed");
+            }
 
         } catch (e) {
             console.log(e);

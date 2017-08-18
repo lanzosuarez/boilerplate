@@ -54,7 +54,7 @@ module.exports = (req, res, next) => {
             const
                 existing = await findUser();
 
-            if (existing !== null) {
+            if (existing === null) {
                 const user = createUser(),
                     newUser = await saveUser(user);
 

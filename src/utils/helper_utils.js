@@ -69,41 +69,6 @@ const saveDocument = (model, val) => {
 };
 
 
-const userFields = () => {
-    return [
-        "username",
-        "email",
-        "firstname",
-        "middlename",
-        "lastname",
-        "city",
-        "province",
-        "zip",
-        "mobile",
-        "govt_ids",
-        "birthday",
-        "gender",
-        "img_url",
-        "addresses",
-        "documents",
-        "cctv",
-        "rfid",
-        "user_permissions"
-    ]
-};
-
-
-const vehicleFields = () => {
-    return [
-        "vin",
-        "plate_number",
-        "vehicle_maker",
-        "vehicle_model",
-        "model_year",
-        "owner",
-        "subscription"
-    ];
-};
 
 const forgotPassTemplate = (name, password) => {
     return `
@@ -127,8 +92,6 @@ module.exports = {
     sendSuccess,
     sendResponse,
     generateKeyPairs,
-    userFields,
-    vehicleFields,
     forgotPassTemplate,
     updateEntity,
     waitForPromiseArr,

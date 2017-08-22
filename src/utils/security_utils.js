@@ -1,9 +1,10 @@
 const jwt = require('jsonwebtoken'),
     passwordGenerator = require('generate-password'),
     bcrypt = require('bcrypt'),
-    { CODE_FORBIDDEN } = require('../globals/globals'),
+    {
+        CODE_FORBIDDEN
+    } = require('../globals/globals'),
     User = require('../models/user'),
-    Client = require('../models/client'),
     { sendResponse } = require('./helper_utils');
 
 
@@ -38,15 +39,6 @@ const
             }).catch(err => {
                 console.log(err);
             });
-    },
-
-    findClient = (_id) => {
-        return Client.findById(_id).
-            then(data => {
-                return data;
-            }).catch(err => {
-                console.log(err);
-            });
     };
 
 //validate JWT access token
@@ -61,41 +53,24 @@ exports.validateAppToken = (req, res, next) => {
 
             if (!err) {
 
-                const { permission_level, _id } = tokenData;
+                const { _id } = tokenData;
 
-                if (permission_level) {
-                    findUser(_id).
-                        then(data => {
-                            if (data !== null) {
-                                return next();
-                            } else {
-                                sendResponse(
-                                    res,
-                                    403,
-                                    "",
-                                    "Invalid User"
-                                );
-                            }
-                        }).catch(err => {
-                            console.log(err);
-                        });
-                } else {
-                    findClient(_id).
-                        then(data => {
-                            if (data !== null) {
-                                return next();
-                            } else {
-                                sendResponse(
-                                    res,
-                                    403,
-                                    "",
-                                    "Invalid User"
-                                );
-                            }
-                        }).catch(err => {
-                            console.log(err);
-                        });
-                }
+                findUser(_id).
+                    then(data => {
+                        if (data !== null) {
+                            return next();
+                        } else {
+                            sendResponse(
+                                res,
+                                403,
+                                "",
+                                "Invalid User"
+                            );
+                        }
+                    }).catch(err => {
+                        console.log(err);
+                    });
+
             }
             else {
                 sendResponse(

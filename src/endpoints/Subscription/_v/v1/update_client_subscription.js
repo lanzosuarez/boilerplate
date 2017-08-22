@@ -13,6 +13,7 @@ module.exports = (req, res, next) => {
     const { _id } = req.params;
 
     const
+    
         findSubscription = () => {
             ClientSubscription.findById(_id).
                 then(data => {

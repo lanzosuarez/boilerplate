@@ -85,6 +85,15 @@ module.exports = (req, res, next) => {
                         throw err;
                     });
             }
+        },
+
+        authError = (res) => {
+            sendResponse(
+                res,
+                401,
+                CODE_AUTH_ERROR,
+                "Invalid username/password"
+            );
         };
 
     //invoke all your process here
@@ -96,27 +105,17 @@ module.exports = (req, res, next) => {
                 var authenticate = await comparePws(user.password);
                 if (authenticate === true) {
                     var token = generateToken(user);
-                        // payload = getPayload(user);
+                    // payload = getPayload(user);
 
                     sendData({
                         token
                     });
 
                 } else {
-                    sendResponse(
-                        res,
-                        401,
-                        CODE_AUTH_ERROR,
-                        "Invalid username/password"
-                    );
+                    authError(res);
                 }
             } else {
-                sendResponse(
-                    res,
-                    401,
-                    CODE_AUTH_ERROR,
-                    "Invalid username/password"
-                );
+                authError(res);
             }
         } catch (err) {
             console.log(err);

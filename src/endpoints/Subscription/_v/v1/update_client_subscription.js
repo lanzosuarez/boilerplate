@@ -1,21 +1,20 @@
 const
-    Client = require('../../../../models/client'),
-    { decodeToken } = require('../../../../utils/security_utils'),
+    ClientSubscription = require('../../../../models/client_subscription'),
     { CODE_NOT_FOUND } = require('../../../../globals/globals'),
     {
         sendError,
         sendSuccess,
         sendResponse,
         generateKeyPairs,
-    } = require('../../../../utils/helper_utils');
+} = require('../../../../utils/helper_utils');
 
 module.exports = (req, res, next) => {
 
-    const { _id } = decodeToken(req.headers['x-access-token']);
+    const { _id } = req.params;
 
     const
-        findClient = () => {
-            Client.findById(_id).
+        findSubscription = () => {
+            ClientSubscription.findById(_id).
                 then(data => {
                     return data;
                 }).catch(err => {
@@ -23,17 +22,18 @@ module.exports = (req, res, next) => {
                 });
         },
 
-        updateClient = (client) => {
+        updateSubscription = (subscription) => {
             Object.keys(req.body).
                 forEach(key => {
-                    client[key] = req.body[key];
+                    subscription[key] = req.body[key];
                 });
-            return client;
+
+            return subscription;
         },
 
-        saveClient = (client) => {
-            return client.save().
-                then(data => {
+        saveSubscription = (subscription) => {
+            return subscription.save()
+                .then(data => {
                     return data;
                 }).catch(err => {
                     throw err;
@@ -41,16 +41,16 @@ module.exports = (req, res, next) => {
         };
 
     async function main() {
-        //kulang pa nung client deductables
+        //kulang pa nung subscription deductables
         //and maybe validations
         try {
-            var client = await findClient();
-            if (client !== null) {
+            var subscription = await findSubscription();
+            if (subscription !== null) {
 
-                updatedClient = updateClient(client);
-            
-                await saveClient(updatedClient);
-               
+                updateSubscription = updateSubscription(subscription);
+
+                await saveSubscription(updateSubscription);
+
                 sendSuccess(res, {}, "Booking successfully updated");
 
             } else {
@@ -65,7 +65,7 @@ module.exports = (req, res, next) => {
             }
 
         } catch (e) {
-            sendError(res, e, "An error happened while processing the client")
+            sendError(res, e, "An error happened while processing the subscription")
         }
     }
 

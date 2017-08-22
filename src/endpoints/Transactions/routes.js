@@ -5,7 +5,6 @@ const get_client_transactions_v1 = require('./_v/v1/get_client_transactions'),
     // update_clients_transactions_v1 = require('./_v/v1/get_clients_transactions'),
     create_client_transaction_v1 = require('./_v/v1/create_transaction');
 
-
 api.get({ path: '/jrc/client_transactions/:_id' },
     get_client_transactions_v1
 );

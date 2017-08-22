@@ -19,7 +19,6 @@ module.exports = (req, res, next) => {
                 });
         };
 
-
     async function main() {
         try {
             var subscriptions = await findSubscriptions();
